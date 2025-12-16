@@ -6,6 +6,12 @@
 #include <memory>
 #include <filesystem>
 
+DJLibraryService::~DJLibraryService() {
+    for (AudioTrack* track : library) {
+        delete track;   
+    }
+    library.clear();
+}
 
 DJLibraryService::DJLibraryService(const Playlist& playlist) 
     : playlist(playlist), library() {}
