@@ -14,9 +14,43 @@ DJLibraryService::DJLibraryService(const Playlist& playlist)
  * @param library_tracks Vector of track info from config
  */
 void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>& library_tracks) {
-    //Todo: Implement buildLibrary method
-    std::cout << "TODO: Implement DJLibraryService::buildLibrary method\n"<< library_tracks.size() << " tracks to be loaded into library.\n";
+    library.clear();
+    for (int i = 0; i < (int)library_tracks.size(); i++) {
+        const SessionConfig::TrackInfo& info = library_tracks[i];
+        AudioTrack* track = nullptr;
+
+        if (info.type == "MP3") {
+            track = new MP3Track(
+                info.title,
+                info.artists,
+                info.duration_seconds,
+                info.bpm,
+                info.extra_param1,
+                info.extra_param2
+            );
+        }
+        else if (info.type == "WAV") {
+            track = new WAVTrack(
+                info.title,
+                info.artists,
+                info.duration_seconds,
+                info.bpm,
+                info.extra_param1,
+                info.extra_param2
+            );
+        }
+
+        if (track != nullptr) {
+            library.push_back(track);
+        }
+    }
+
+    std::cout << "[Library] Loaded "
+              << library.size()
+              << " tracks into library."
+              << std::endl;
 }
+
 
 /**
  * @brief Display the current state of the DJ library playlist
