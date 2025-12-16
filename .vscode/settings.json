@@ -1,28 +1,29 @@
 {
     // Disable GitHub Copilot
     "github.copilot.enable": {
-        "*": false,
-        "plaintext": false,
-        "markdown": false,
-        "cpp": false,
+        "*": true,
+        "plaintext": true,
+        "markdown": true,
+        "scminput": false,
+        "cpp": true,
         "c": false,
-        "h": false
+        "h": true
     },
     "github.copilot.advanced": {
-        "inlineSuggestEnable": false
+        "inlineSuggestEnable": true
     },
     
     // Disable inline suggestions and completions from AI
-    "editor.inlineSuggest.enabled": false,
+    "editor.inlineSuggest.enabled": true,
     "editor.quickSuggestions": {
-        "other": false,
-        "comments": false,
-        "strings": false
+        "other": true,
+        "comments": true,
+        "strings": true
     },
     
     // Disable snippets that might use AI
     "editor.snippetSuggestions": "none",
-    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": true,
     
     // Disable IntelliCode AI-assisted completions
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
@@ -33,7 +34,7 @@
     
     // C++ specific settings
     "C_Cpp.intelliSenseEngine": "default",
-    "C_Cpp.autocomplete": "disabled",
+    "C_Cpp.autocomplete": "default", //change to "disabled"
     "C_Cpp.errorSquiggles": "enabled",
     
     // File associations
