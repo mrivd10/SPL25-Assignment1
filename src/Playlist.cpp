@@ -10,11 +10,14 @@ Playlist::Playlist(const std::string& name)
 // Students must fix this in Phase 1
 Playlist::~Playlist() {
     PlaylistNode* current = head;
-    while (current != nullptr) {       
-        PlaylistNode* next = current->next; 
+    while (current) {
+        PlaylistNode* next = current->next;
+        delete current->track;
         delete current;
-        current = next;               
+        current = next;
     }
+    head = nullptr;
+    track_count = 0;
 }
 
 void Playlist::add_track(AudioTrack* track) {

@@ -29,7 +29,6 @@ AudioTrack::AudioTrack(const std::string& title, const std::vector<std::string>&
     }
     std::cout << std::endl;
     #endif
-    delete[] waveform_data;
 }
 
 // ========== TODO: STUDENTS IMPLEMENT RULE OF 5 ==========
@@ -39,7 +38,7 @@ AudioTrack::~AudioTrack() {
     #ifdef DEBUG
     std::cout << "AudioTrack destructor called for: " << title << std::endl;
     #endif
-    // Your code here...
+    delete[] waveform_data;
 }
 
 /**
