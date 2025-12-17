@@ -72,9 +72,30 @@ bool DJSession::load_playlist(const std::string& playlist_name)  {
 
  */
 int DJSession::load_track_to_controller(const std::string& track_name) {
-    // Your implementation here
-    return 0; // Placeholder
+    AudioTrack* track = library_service.findTrack(track_name);
+
+    if (track == nullptr) {
+        std::cerr << "[ERROR] Track: \"" << track_name << "\" not found in library\n";
+        stats.errors++;
+        return 0;
+    }
+
+    std::cout << "[System] Loading track '" << track_name << "' to controller...\n";
+
+    int result = controller_service.loadTrackToCache(*track);
+
+    if (result == 1) {
+        stats.cache_hits++;
+    } else if (result == 0) {
+        stats.cache_misses++;
+    } else if (result == -1) {
+        stats.cache_misses++;
+        stats.cache_evictions++;
+    }
+
+    return result;
 }
+
 
 /**
  * TODO: Implement load_track_to_mixer_deck method
@@ -83,10 +104,29 @@ int DJSession::load_track_to_controller(const std::string& track_name) {
  * @return: Whether track was successfully loaded to a deck
  */
 bool DJSession::load_track_to_mixer_deck(const std::string& track_title) {
-    std::cout << "[System] Delegating track transfer to MixingEngineService for: " << track_title << std::endl;
-    // your implementation here
-    return false; // Placeholder
+    std::cout << "[System] Delegating track transfer to MixingEngineService for: "
+              << track_title << std::endl;
+    AudioTrack* track = controller_service.getTrackFromCache(track_title);
+
+    if (track == nullptr) {
+        std::cerr << "[ERROR] Track: \"" << track_title << "\" not found in cache\n";
+        stats.errors++;
+        return false;
+    }
+    int deck_index = mixing_service.loadTrackToDeck(*track);
+    if (deck_index == 0) {
+        stats.deck_loads_a++;
+        stats.transitions++;
+    } else if (deck_index == 1) {
+        stats.deck_loads_b++;
+        stats.transitions++;
+    } else {
+        stats.errors++;
+        return false;
+    }
+    return true;
 }
+
 
 /**
  * @brief Main simulation loop that orchestrates the DJ performance session.
