@@ -119,6 +119,22 @@ bool MixingEngineService::can_mix_tracks(const PointerWrapper<AudioTrack>& track
  * @param track: Track to synchronize with active deck
  */
 void MixingEngineService::sync_bpm(const PointerWrapper<AudioTrack>& track) const {
-  
+    if (decks[active_deck] == nullptr) {
+        return;
+    }
+
+    if (track.get() == nullptr) {
+        return;
+    }
+
+    int original_bpm = track.get()->get_bpm();
+    int active_bpm = decks[active_deck]->get_bpm();
+
+    int synced_bpm = (original_bpm + active_bpm) / 2;
+
+    track.get()->set_bpm(synced_bpm);
+
+    std::cout << "[Sync BPM] Syncing BPM from "
+              << original_bpm << " to " << synced_bpm << "\n";
 }
 
