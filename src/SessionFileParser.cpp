@@ -99,9 +99,28 @@ std::string SessionFileParser::extract_playlist_name(const std::string& playlist
         filename = filename.substr(0, dot_pos);
     }
     
-    // TODO: Convert underscores to spaces and clean up name
     std::replace(filename.begin(), filename.end(), '_', ' ');
-    
+
+    // Collapse multiple spaces and trim leading/trailing spaces in place
+    size_t write = 0;
+    bool prev_space = true;  // treat start as space to skip leading spaces
+    for (size_t read = 0; read < filename.size(); ++read) {
+        char c = filename[read];
+        if (c == ' ') {
+            if (prev_space) {
+                continue;
+            }
+            prev_space = true;
+        } else {
+            prev_space = false;
+        }
+        filename[write++] = c;
+    }
+    if (write > 0 && filename[write - 1] == ' ') {
+        --write;
+    }
+    filename.resize(write);
+
     return filename;
 }
 

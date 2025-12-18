@@ -37,32 +37,27 @@ public:
     // ========== RULE OF 5 - STUDENTS MUST IMPLEMENT ALL OF THESE ==========
 
     /**
-     * TODO: Implement destructor
-     * HINT: Don't forget to clean up waveform_data!
+     * Destructor - cleans up waveform_data
      */
     virtual ~AudioTrack();
 
     /**
-     * TODO: Implement copy constructor
-     * HINT: Deep copy the waveform_data array
+     * Copy constructor - deep copies waveform_data
      */
     AudioTrack(const AudioTrack& other);
 
     /**
-     * TODO: Implement copy assignment operator
-     * HINT: Check for self-assignment, clean up existing data, then deep copy
+     * Copy assignment operator with deep copy semantics
      */
     AudioTrack& operator=(const AudioTrack& other);
 
     /**
-     * TODO: Implement move constructor
-     * HINT: Transfer ownership without copying, leave other in valid state
+     * Move constructor - transfers ownership without copying
      */
     AudioTrack(AudioTrack&& other) noexcept;
 
     /**
-     * TODO: Implement move assignment operator
-     * HINT: Clean up current data, steal from other, reset other
+     * Move assignment operator - steals resources and resets source
      */
     AudioTrack& operator=(AudioTrack&& other) noexcept;
 

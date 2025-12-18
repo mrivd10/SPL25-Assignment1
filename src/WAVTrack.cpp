@@ -9,8 +9,6 @@ WAVTrack::WAVTrack(const std::string &title, const std::vector<std::string> &art
     std::cout << "WAVTrack created: " << sample_rate << "Hz/" << bit_depth << "bit" << std::endl;
 }
 
-// ========== TODO: STUDENTS IMPLEMENT THESE VIRTUAL FUNCTIONS ==========
-
 void WAVTrack::load()
 {
     std::cout << "[WAVTrack::load] Loading WAV: " << title
@@ -24,12 +22,6 @@ void WAVTrack::load()
 void WAVTrack::analyze_beatgrid()
 {
     std::cout << "[WAVTrack::analyze_beatgrid] Analyzing beat grid for: \"" << title << "\"\n";
-    // TODO: Implement WAV-specific beat detection analysis
-    // Requirements:
-    // 1. Print analysis message with track title
-    // 2. Calculate beats: (duration_seconds / 60.0) * bpm
-    // 3. Print number of beats and mention uncompressed precision
-    // should print "  → Estimated beats: <beats>  → Precision factor: 1.0 (uncompressed audio)"
     double beats = (duration_seconds / 60.0) * bpm;
     double precision_factor = 1.0;
     std ::cout << "  → Estimated beats: " << beats << "  → Precision factor: " << precision_factor << " (uncompressed audio)" << std::endl;
@@ -37,9 +29,6 @@ void WAVTrack::analyze_beatgrid()
 
 double WAVTrack::get_quality_score() const
 {
-    // TODO: Implement WAV quality scoring
-    // NOTE: Use exactly 2 spaces before each arrow (→) character
-    // NOTE: Cast beats to integer when printing
     int base_score = 70;
 
     if (sample_rate >= 44100)
@@ -69,6 +58,5 @@ double WAVTrack::get_quality_score() const
 
 PointerWrapper<AudioTrack> WAVTrack::clone() const
 {
-    // TODO: Implement the clone method
     return PointerWrapper<AudioTrack>(new WAVTrack(*this));
 }

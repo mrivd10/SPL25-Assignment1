@@ -15,7 +15,7 @@ AudioTrack* LRUCache::get(const std::string& track_id) {
 }
 
 /**
- * TODO: Implement the put() method for LRUCache
+ * Insert track into cache using LRU policy
  */
 bool LRUCache::put(PointerWrapper<AudioTrack> track) {
     if (track.get() == nullptr) {
@@ -90,9 +90,6 @@ size_t LRUCache::findSlot(const std::string& track_id) const {
 
 }
 
-/**
- * TODO: Implement the findLRUSlot() method for LRUCache
- */
 size_t LRUCache::findLRUSlot() const {
 size_t lru_index = max_size;
     uint64_t min_access_time = 0;

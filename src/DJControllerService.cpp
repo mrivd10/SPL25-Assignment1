@@ -7,7 +7,8 @@
 DJControllerService::DJControllerService(size_t cache_size)
     : cache(cache_size) {}
 /**
- * TODO: Implement loadTrackToCache method
+ * Load track into cache and return cache operation result:
+ * 1 = hit, 0 = miss, -1 = miss with eviction
  */
 int DJControllerService::loadTrackToCache(AudioTrack& track) {
     const std::string& title = track.get_title();
@@ -40,7 +41,6 @@ int DJControllerService::loadTrackToCache(AudioTrack& track) {
 void DJControllerService::set_cache_size(size_t new_size) {
     cache.set_capacity(new_size);
 }
-//implemented
 void DJControllerService::displayCacheStatus() const {
     std::cout << "\n=== Cache Status ===\n";
     cache.displayStatus();
@@ -48,8 +48,8 @@ void DJControllerService::displayCacheStatus() const {
 }
 
 /**
- * TODO: Implement getTrackFromCache method
+ * Retrieve a track from cache by title
  */
 AudioTrack* DJControllerService::getTrackFromCache(const std::string& track_title) {
-return cache.get(track_title);
+    return cache.get(track_title);
 }

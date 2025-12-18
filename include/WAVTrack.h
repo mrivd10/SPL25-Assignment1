@@ -27,29 +27,25 @@ public:
     WAVTrack(const std::string& title, const std::vector<std::string>& artists, 
              int duration, int bpm, int sample_rate, int bit_depth);
 
-    // ========== TODO: IMPLEMENT VIRTUAL FUNCTIONS ==========
+    // ========== VIRTUAL FUNCTION OVERRIDES ==========
 
     /**
-     * TODO: Implement load function for WAV files
-     * HINT: WAV files are uncompressed, so loading might be faster
+     * Load function for WAV files
      */
     void load() override;
 
     /**
-     * TODO: Implement beat grid analysis for WAV
-     * HINT: Uncompressed audio allows more precise beat detection
+     * WAV-specific beat grid analysis
      */
     void analyze_beatgrid() override;
 
     /**
-     * TODO: Implement quality score calculation
-     * HINT: Use sample rate and bit depth for quality (both higher = better)
+     * Quality scoring based on sample rate and bit depth
      */
     double get_quality_score() const override;
 
     /**
-     * TODO: Implement clone function
-     * HINT: Return a unique_ptr to a new WAVTrack with same properties
+     * Clone function returning a polymorphic copy
      */
     PointerWrapper<AudioTrack> clone() const override;
 

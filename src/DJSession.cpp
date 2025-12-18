@@ -50,26 +50,9 @@ bool DJSession::load_playlist(const std::string& playlist_name)  {
 }
 
 /**
- * TODO: Implement load_track_to_controller method
- * 
- * REQUIREMENTS:
- * 1. Track Retrieval
- *    - Find track in library using track name
- *    - Handle case when track is not found
- *    - Update error stats if track not found
- * 
- * 2. Controller Loading
- *    - Delegate loading to controller_service
- *    - Pass track by reference to controller
- * 
- * 3. Return Values
- *    1: Cache HIT
- *    0: Cache MISS (or error)
- *   -1: Cache MISS with eviction
- * 
- * @param track_name: Name of track to load
- * @return: Cache operation result code
-
+ * Load a track into the controller cache, updating stats for hits/misses.
+ * @param track_name Name of track to load
+ * @return Cache operation result code (1 hit, 0 miss, -1 miss with eviction)
  */
 int DJSession::load_track_to_controller(const std::string& track_name) {
     AudioTrack* track = library_service.findTrack(track_name);
@@ -98,10 +81,9 @@ int DJSession::load_track_to_controller(const std::string& track_name) {
 
 
 /**
- * TODO: Implement load_track_to_mixer_deck method
- * 
- * @param track_title: Title of track to load to mixer
- * @return: Whether track was successfully loaded to a deck
+ * Load a cached track into a mixer deck and update deck stats.
+ * @param track_title Title of track to load to mixer
+ * @return Whether track was successfully loaded to a deck
  */
 bool DJSession::load_track_to_mixer_deck(const std::string& track_title) {
     std::cout << "[System] Delegating track transfer to MixingEngineService for: "

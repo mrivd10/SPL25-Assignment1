@@ -7,8 +7,6 @@ Playlist::Playlist(const std::string &name)
 {
     std::cout << "Created playlist: " << name << std::endl;
 }
-// TODO: Fix memory leaks!
-// Students must fix this in Phase 1
 Playlist::~Playlist()
 {
     PlaylistNode *current = head;

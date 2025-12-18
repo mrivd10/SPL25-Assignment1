@@ -46,15 +46,21 @@ void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>&
             );
         }
 
-        if (track != nullptr) {
+        if (track) {
             library.push_back(track);
+            std::cout << "library_track_"
+            << i << "="
+            << info.type << ","
+            << info.title << ",{"
+            << info.artists[0] << "},"
+            << info.duration_seconds << ","
+            << info.bpm << ","
+            << info.extra_param1 << ","
+            << info.extra_param2 << std::endl;
         }
     }
 
-    std::cout << "[Library] Loaded "
-              << library.size()
-              << " tracks into library."
-              << std::endl;
+    std::cout << "[INFO] Track library built: " << library.size() << " tracks loaded" << std::endl;
 }
 
 
@@ -93,22 +99,43 @@ Playlist& DJLibraryService::getPlaylist() {
  * HINT: Leverage Playlist's find_track method
  */
 AudioTrack* DJLibraryService::findTrack(const std::string& track_title) {
-    // Your implementation here
-    return nullptr; // Placeholder
+    AudioTrack* track = playlist.find_track(track_title);
+    return track;
 }
 
 void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name, 
                                                const std::vector<int>& track_indices) {
-    // Your implementation here
+    std::cout << "[INFO] Loading playlist: " << playlist_name << std::endl;
     // For now, add a placeholder to fix the linker error
-    (void)playlist_name;  // Suppress unused parameter warning
-    (void)track_indices;  // Suppress unused parameter warning
+    playlist = Playlist(playlist_name);
+    for (int index : track_indices) {
+        if (index < 1 || index > (int)library.size()) {
+            std::cerr << "[WARNING] Invalid track index: " << index << std::endl;
+            continue;
+        }
+        
+        // get the cloned track
+        AudioTrack* track = library[index - 1]->clone().release();
+        if (!track) {
+            std::cerr << "[ERROR] Failed to clone track at index: " << index << std::endl;
+            continue;
+        }
+        track->load();
+        track->analyze_beatgrid();
+        // add to playlist
+        playlist.add_track(track);
+        std::cout << "Added '" << track->get_title() << "' to playlist '" << playlist_name << "'" << std::endl;
+    }
 }
+
 /**
  * TODO: Implement getTrackTitles method
  * @return Vector of track titles in the playlist
  */
 std::vector<std::string> DJLibraryService::getTrackTitles() const {
-    // Your implementation here
-    return std::vector<std::string>(); // Placeholder
+    std::vector<std::string> titles;
+    for (AudioTrack* track : playlist.getTracks()) {
+        titles.push_back(track->get_title());
+    }
+    return titles;
 }
