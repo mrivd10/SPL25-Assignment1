@@ -41,7 +41,7 @@ public:
     }
     // ========== COPY OPERATIONS (DELETED) ==========
 
-    /**
+    /** 
      * Copy constructor is DELETED
      * Think about why this might be necessary for a pointer wrapper
      */
