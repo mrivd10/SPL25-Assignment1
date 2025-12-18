@@ -20,7 +20,6 @@ DJLibraryService::DJLibraryService(const Playlist& playlist)
  * @param library_tracks Vector of track info from config
  */
 void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>& library_tracks) {
-    library.clear();
     for (int i = 0; i < (int)library_tracks.size(); i++) {
         const SessionConfig::TrackInfo& info = library_tracks[i];
         AudioTrack* track = nullptr;
