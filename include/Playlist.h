@@ -38,11 +38,14 @@ public:
     Playlist(const std::string &name = "");
 
     /**
-     * Destructor
+     * rules of 3
      */
     ~Playlist();
+    Playlist(const Playlist& other);
+    Playlist& operator=(const Playlist& other);
 
     /**
+    
      * Add a track to the playlist
      * @param track Pointer to AudioTrack to add
      */

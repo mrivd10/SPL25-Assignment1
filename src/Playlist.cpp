@@ -21,25 +21,8 @@ Playlist::~Playlist()
     track_count = 0;
 }
 
-void Playlist::add_track(AudioTrack *track)
-{
-    if (!track)
-    {
-        std::cout << "[Error] Cannot add null track to playlist" << std::endl;
-        return;
-    }
 
-    // Create new node - this allocates memory!
-    PlaylistNode *new_node = new PlaylistNode(track);
 
-    // Add to front of list
-    new_node->next = head;
-    head = new_node;
-    track_count++;
-
-    std::cout << "Added '" << track->get_title() << "' to playlist '"
-              << playlist_name << "'" << std::endl;
-}
 
 void Playlist::remove_track(const std::string &title)
 {
