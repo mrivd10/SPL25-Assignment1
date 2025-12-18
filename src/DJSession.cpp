@@ -142,7 +142,9 @@ void DJSession::simulate_dj_performance() {
     std::cout << "Cache Capacity: " << session_config.controller_cache_size << " slots (LRU policy)" << std::endl;
     std::cout << "\n--- Processing Tracks ---" << std::endl;
 
-    std::cout << "TODO: Implement the DJ performance simulation workflow here." << std::endl;
+    std::cout << "get the wanted playlist(s) from user\n" << "extract tracks from playlist\n"
+              << "for each track: load to controller cache, then load to mixer deck from the cache\n";
+              
     /**
      * Abort early if configuration parsing fails or no playlists are found
      * Playlist Selection Loop:
