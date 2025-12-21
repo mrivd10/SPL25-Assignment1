@@ -20,6 +20,86 @@ Playlist::~Playlist()
     head = nullptr;
     track_count = 0;
 }
+
+Playlist::Playlist(const Playlist& other)
+    : head(nullptr), playlist_name(other.playlist_name), track_count(0)
+{
+    if (!other.head)
+        return;
+
+    PointerWrapper<AudioTrack> cHead_track = other.head->track->clone();
+    head = new PlaylistNode(cHead_track.release());
+    track_count++;
+
+    PlaylistNode* current_new = head;
+    PlaylistNode* current_other = other.head->next;
+
+    while (current_other)
+    {
+        PointerWrapper<AudioTrack> cloned_track =
+            current_other->track->clone();
+
+        PlaylistNode* new_node =
+            new PlaylistNode(cloned_track.release());
+
+        current_new->next = new_node;
+        current_new = new_node;
+        current_other = current_other->next;
+        track_count++;
+    }
+}
+
+
+
+
+Playlist& Playlist::operator=(const Playlist& other)
+{
+    if (this != &other)
+    {
+        PlaylistNode* current = head;
+        while (current)
+        {
+            PlaylistNode* next_node = current->next;
+            delete current->track;
+            delete current;
+            current = next_node;
+        }
+
+        head = nullptr;
+        track_count = 0;
+        playlist_name = other.playlist_name;
+
+        if (other.head)
+        {
+            PointerWrapper<AudioTrack> cHead =
+                other.head->track->clone();
+
+            head = new PlaylistNode(cHead.release());
+            track_count++;
+
+            PlaylistNode* curr_new = head;
+            PlaylistNode* curr_other = other.head->next;
+
+            while (curr_other)
+            {
+                PointerWrapper<AudioTrack> c_track =
+                    curr_other->track->clone();
+
+                PlaylistNode* new_node =
+                    new PlaylistNode(c_track.release());
+
+                curr_new->next = new_node;
+                curr_new = new_node;
+                curr_other = curr_other->next;
+                track_count++;
+            }
+        }
+    }
+    return *this;
+}
+
+
+
 void Playlist::add_track(AudioTrack *track)
 {
     if (!track)
