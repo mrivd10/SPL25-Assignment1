@@ -20,7 +20,6 @@ Playlist::~Playlist()
     head = nullptr;
     track_count = 0;
 }
-
 void Playlist::add_track(AudioTrack *track)
 {
     if (!track)
@@ -40,7 +39,6 @@ void Playlist::add_track(AudioTrack *track)
     std::cout << "Added '" << track->get_title() << "' to playlist '"
               << playlist_name << "'" << std::endl;
 }
-
 void Playlist::remove_track(const std::string &title)
 {
     PlaylistNode *current = head;
